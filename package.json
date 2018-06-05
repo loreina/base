@@ -1,0 +1,37 @@
+{
+  "name": "base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/js/app.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://loreina@github.com/loreina/base.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loreina/base/issues"
+  },
+  "homepage": "https://github.com/loreina/base#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.0",
+    "node-sass": "^4.9.0",
+    "postcss-loader": "^2.1.5",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.11.0",
+    "webpack-cli": "^3.0.2"
+  },
+  "dependencies": {}
+}
