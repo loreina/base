@@ -7,7 +7,7 @@ module.exports = {
   entry: { main: './src/js/app.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/app.bundle.js'
+    filename: 'js/bundle.js'
   },
   module: {
     rules: [
@@ -21,7 +21,14 @@ module.exports = {
       {
         test: /\.scss$/,
         use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-      }
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        loader: 'file-loader',
+        options: {
+            name: '[path][name].[ext]'
+        }
+    }
     ]
   },
   plugins: [ 
@@ -33,7 +40,7 @@ module.exports = {
       filename: 'index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/main.bundle.css',
+      filename: 'css/bundle.css',
     })
   ],
   devServer: {
