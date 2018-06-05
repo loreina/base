@@ -2,12 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const cssnano = require('cssnano');
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   entry: { main: './src/js/app.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/bundle.js'
+    filename: 'js/bundle.js',
+    sourceMapFilename: './bundle.js.map'
   },
   module: {
     rules: [
@@ -17,6 +20,25 @@ module.exports = {
         use: {
           loader: "babel-loader"
         }
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+            {
+                loader: 'style-loader',
+            },
+            {
+                loader: 'css-loader',
+                options: {
+                    importLoaders: 1,
+                    sourceMap: true,
+                }
+            },
+            {
+                loader: 'postcss-loader'
+            }
+        ]
       },
       {
         test: /\.scss$/,
@@ -41,6 +63,12 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'css/bundle.css',
+    }),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.css$/g,
+      cssProcessor: require('cssnano'),
+      cssProcessorOptions: { discardComments: { removeAll: true } },
+      canPrint: true
     })
   ],
   devServer: {
