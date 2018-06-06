@@ -2,8 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const cssnano = require('cssnano');
-var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   entry: { main: './src/js/app.js' },
@@ -69,7 +70,10 @@ module.exports = {
       cssProcessor: require('cssnano'),
       cssProcessorOptions: { discardComments: { removeAll: true } },
       canPrint: true
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: './src/static/', to: './static/' }
+    ]),
   ],
   devServer: {
     contentBase: path.resolve(__dirname, "dist"),
