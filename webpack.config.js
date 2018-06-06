@@ -1,4 +1,5 @@
 const path = require('path');
+const glob = require('glob');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -6,6 +7,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const cssnano = require('cssnano');
+
+// TODO: dir.slice path to remove src/ but not path after
+// TODO: create array for htmlwebpackplugin to output html files
 
 module.exports = {
   entry: { main: './src/js/app.js' },
@@ -22,6 +26,14 @@ module.exports = {
         use: {
           loader: "babel-loader"
         }
+      },
+      {
+        test: /\.html$/,
+        loader: 'raw-loader',
+      },
+      {
+        test: /\.(scss|sass)$/,
+        use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.css$/,
@@ -43,14 +55,10 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
-        use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-      },
-      {
         test: /\.(jpe?g|png|gif)$/,
         loader: 'file-loader',
         options: {
-            name: '[path][name].[ext]'
+            name: '[path][name].[ext]',
         }
     }
     ]
@@ -70,19 +78,26 @@ module.exports = {
       filename: 'css/bundle.css',
     }),
     new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.css$/g,
+      assetNameRegExp: /\.css$/,
       cssProcessor: require('cssnano'),
       cssProcessorOptions: { discardComments: { removeAll: true } },
       canPrint: true
     }),
     new CopyWebpackPlugin([
-      { from: './src/static/', to: './static/' }
+      { 
+        from: './src/static/', 
+        to: './static/' 
+      },
+      { 
+        from: './src/**/*.html', 
+        to: './[name].html' 
+      }
     ]),
   ],
   devServer: {
     contentBase: path.resolve(__dirname, "dist"),
     watchContentBase: true,
-    port: 3000,
+    port: 7000,
     stats: 'errors-only',
     open: true,
     compress: true
