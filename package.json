@@ -8,12 +8,9 @@
     "dev": "webpack-dev-server --open --mode development",
     "start": "webpack && http-server ./dist -p 7000 -o"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://loreina@github.com/loreina/base.git"
-  },
+  "repository": "git+https://loreina@github.com/loreina/base.git",
   "keywords": [],
-  "author": "",
+  "author": "loreina <loreina98@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/loreina/base/issues"
@@ -52,7 +49,6 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
-    "npm": "^6.1.0",
     "path": "^0.12.7"
   }
 }
