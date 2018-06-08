@@ -4,7 +4,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const cssnano = require('cssnano');
 
@@ -68,16 +67,6 @@ var config = {
     new MiniCssExtractPlugin({
       filename: 'css/bundle.css',
     }),
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.css$/,
-      cssProcessor: require('cssnano'),
-      cssProcessorOptions: {
-        discardComments: {
-          removeAll: true
-        }
-      },
-      canPrint: true
-    }),
     new CopyWebpackPlugin([
       {
       from: './src/static/',
@@ -85,15 +74,7 @@ var config = {
       }, 
     ]),
   ],
-  devServer: {
-    contentBase: path.resolve(__dirname, `dist`),
-    watchContentBase: true,
-    port: 7000,
-    stats: 'errors-only',
-    open: true,
-    compress: true
-  },
-  devtool: 'inline-source-map'
+  devtool: 'eval'
 };
 
 glob.sync(`./src/**/*.html`).forEach((item) => {
