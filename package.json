@@ -6,12 +6,12 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack-dev-server --open --mode development",
-    "start": "webpack && http-server ./dist -p 7000 -o"
+    "start": "webpack && http-server ./dist -p 1000 -o"
   },
   "repository": "git+https://loreina@github.com/loreina/base.git",
   "keywords": [],
-  "author": "loreina <loreina98@gmail.com>",
-  "license": "ISC",
+  "author": "Loreina Chew",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/loreina/base/issues"
   },

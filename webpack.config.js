@@ -8,19 +8,17 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const cssnano = require('cssnano');
 
-// TODO: dir.slice path to remove src/ but not path after
-// TODO: create array for htmlwebpackplugin to output html files
-
-module.exports = {
-  entry: { main: './src/js/app.js' },
+var config = {
+  entry: {
+    main: './src/js/app.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/bundle.js',
     sourceMapFilename: './bundle.js.map'
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
@@ -33,69 +31,62 @@ module.exports = {
       },
       {
         test: /\.(scss|sass)$/,
-        use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: [
-            {
-                loader: 'style-loader',
-            },
-            {
-                loader: 'css-loader',
-                options: {
-                    importLoaders: 1,
-                    sourceMap: true,
-                }
-            },
-            {
-                loader: 'postcss-loader'
+        use: [{
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              sourceMap: true,
             }
+          },
+          {
+            loader: 'postcss-loader'
+          }
         ]
       },
       {
         test: /\.(jpe?g|png|gif)$/,
         loader: 'file-loader',
         options: {
-            name: '[path][name].[ext]',
+          name: '[path][name].[ext]',
         }
-    }
+      }
     ]
   },
-  plugins: [ 
+  plugins: [
     new UglifyJsPlugin({
       sourceMap: true,
     }),
-    new CleanWebpackPlugin('dist', {} ),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: true,
-      template: './src/index.html',
-      filename: 'index.html'
-    }),
+    new CleanWebpackPlugin('dist', {}),
     new MiniCssExtractPlugin({
       filename: 'css/bundle.css',
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/,
       cssProcessor: require('cssnano'),
-      cssProcessorOptions: { discardComments: { removeAll: true } },
+      cssProcessorOptions: {
+        discardComments: {
+          removeAll: true
+        }
+      },
       canPrint: true
     }),
     new CopyWebpackPlugin([
-      { 
-        from: './src/static/', 
-        to: './static/' 
-      },
-      { 
-        from: './src/**/*.html', 
-        to: './[name].html' 
-      }
+      {
+      from: './src/static/',
+      to: './static/'
+      }, 
     ]),
   ],
   devServer: {
-    contentBase: path.resolve(__dirname, "dist"),
+    contentBase: path.resolve(__dirname, `dist`),
     watchContentBase: true,
     port: 7000,
     stats: 'errors-only',
@@ -104,3 +95,14 @@ module.exports = {
   },
   devtool: 'inline-source-map'
 };
+
+glob.sync(`./src/**/*.html`).forEach((item) => {
+  config.plugins.push(
+    new HtmlWebpackPlugin({
+      filename: item.slice(item.indexOf('/', 2) + 1),
+      template: item
+    })
+  )
+});
+
+module.exports = config;
