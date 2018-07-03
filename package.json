@@ -6,8 +6,7 @@
   "scripts": {
     "build": "webpack --mode production --config webpack.prod.js",
     "dev": "webpack-dev-server --open --mode development --config webpack.dev.js",
-    "lint": "eslint src/**/*.js",
-    "lint:s": "prettier src/**/*.scss",
+    "test": "eslint src/**/*.js && prettier src/**/*.scss",
     "start": "webpack --config webpack.prod.js && http-server ./dist -p 9000 -o"
   },
   "repository": "git+https://loreina@github.com/loreina/base.git",
