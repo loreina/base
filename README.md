@@ -28,3 +28,13 @@ A Webpack 4 static starter stack for web development.
 `yarn start`
 - Build app and files (HMR disabled)
 - Served at `localhost:9000`
+
+### All commands
+
+Command | Description
+--- | ---
+`yarn build` | Build app (HMR disabled) and build `src/` files to `dist/` folder
+`yarn dev` | Build app (HMR enabled) and serve at `localhost:7000`
+`yarn lint` | Run JS linter
+`yarn lint:s` | Run SCSS linter
+`yarn start` | Build app and files (HMR disabled) and serve at `localhost:9000`

@@ -6,6 +6,8 @@
   "scripts": {
     "build": "webpack --mode production --config webpack.prod.js",
     "dev": "webpack-dev-server --open --mode development --config webpack.dev.js",
+    "lint": "eslint src/**/*.js",
+    "lint:s": "prettier src/**/*.scss",
     "start": "webpack --config webpack.prod.js && http-server ./dist -p 9000 -o"
   },
   "repository": "git+https://loreina@github.com/loreina/base.git",
@@ -40,6 +42,7 @@
     "optimize-css-assets-webpack-plugin": "^4.0.2",
     "postcss-cli": "^5.0.0",
     "postcss-loader": "^2.1.5",
+    "prettier": "^1.13.7",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
